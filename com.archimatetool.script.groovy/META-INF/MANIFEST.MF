@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Archi Groovy Scripting
+Bundle-Name: jArchi Groovy
 Bundle-SymbolicName: com.archimatetool.script.groovy;singleton:=true
 Bundle-Localization: plugin
 Bundle-Version: 1.0.0.qualifier

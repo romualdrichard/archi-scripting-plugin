@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Archi JRuby Scripting
+Bundle-Name: jArchi JRuby
 Bundle-SymbolicName: com.archimatetool.script.jruby;singleton:=true
 Bundle-Localization: plugin
 Bundle-Version: 1.0.0.qualifier
