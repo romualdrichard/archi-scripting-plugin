@@ -38,7 +38,7 @@ public class Console {
      */
     public void show() {
         if(PlatformUI.isWorkbenchRunning()) {
-            ViewManager.showViewPart(ConsoleView.ID, true);
+            ViewManager.showViewPart(ConsoleView.ID, false); // Don't set focus
             ConsoleOutput.start(); // Ensure Console is re-directing output
         }
     }
@@ -139,6 +139,9 @@ public class Console {
     }
 
     public void setTextColor(int red, int green, int blue) {
+        red = Math.max(0, Math.min(255, red));
+        green = Math.max(0, Math.min(255, green));
+        blue = Math.max(0, Math.min(255, blue));
         currentColor = new Color(red, green, blue);
     }
     

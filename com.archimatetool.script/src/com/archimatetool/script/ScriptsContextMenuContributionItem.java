@@ -96,8 +96,10 @@ public class ScriptsContextMenuContributionItem extends ContributionItem impleme
                     fillItems(subMenu, file.listFiles());
                 }
                 else {
-                    IScriptEngineProvider provider = IScriptEngineProvider.INSTANCE.getProviderForFile(file);
-                    ImageDescriptor imageDescriptor = provider.getImageDescriptor();
+                    ImageDescriptor imageDescriptor = IScriptEngineProvider.INSTANCE.getProviderForFile(file)
+                                                                                    .map(IScriptEngineProvider::getImageDescriptor)
+                                                                                    .orElse(null);
+                    
                     String label = StringUtils.escapeAmpersandsInText(FileUtils.getFileNameWithoutExtension(file));
                     
                     // If there is a key binding then use a CommandContributionItem to show the key mnemonic and run the Command
@@ -135,20 +137,24 @@ public class ScriptsContextMenuContributionItem extends ContributionItem impleme
     
     private boolean doShowFile(File file) {
         if(file.isDirectory()) {
-            for(File f : file.listFiles()) {
-                // Don't show folder if marked as hidden
-                if(ScriptFiles.HIDDEN_MARKER_FILE.equals(f.getName())) {
-                    return false;
-                }
+            File[] files = file.listFiles();
+            if(files != null) {
+                for(File f : files) {
+                    // Don't show folder if marked as hidden
+                    if(ScriptFiles.HIDDEN_MARKER_FILE.equals(f.getName())) {
+                        return false;
+                    }
 
-                if(doShowFile(f)) {
-                    return true;
+                    if(doShowFile(f)) {
+                        return true;
+                    }
                 }
             }
+            
             return false;
         }
         
-        return IScriptEngineProvider.INSTANCE.getProviderForFile(file) != null;
+        return IScriptEngineProvider.INSTANCE.hasProviderForFile(file);
     }
     
     @Override
